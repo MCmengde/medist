@@ -1,4 +1,9 @@
-use std::{error::Error, io::{self, Write}, net::TcpStream};
+use std::{
+    error::Error,
+    io::{self, Read, Write},
+    net::TcpStream,
+    str,
+};
 
 const LOCAL_ADDR: &str = "127.0.0.1";
 const PORT: &str = "9876";
@@ -20,7 +25,16 @@ fn main() -> Result<(), Box<dyn Error>> {
             break;
         }
 
-        print!("{}", input);
+        stream.write_all(input.as_bytes())?;
+        stream.flush()?;
+
+        if stream.read(&mut message_buf).unwrap() == 0 {
+            panic!("Server closed");
+        }
+        
+        let s = str::from_utf8(&message_buf).unwrap();
+        print!("{}", s);
+        io::stdout().flush()?;
     }
 
     Ok(())
