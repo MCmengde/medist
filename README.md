@@ -1,6 +1,8 @@
 # medist
 
-My implement of redis in rust
+My implement of redis in rust.
+
+The strategy of develop this repo is implying function first, and then optimize or refactor.
 
 ## Todo
 
