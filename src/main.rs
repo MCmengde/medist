@@ -8,6 +8,7 @@ const PORT: &str = "9876";
 
 fn main() -> std::io::Result<()> {
     let listener = TcpListener::bind(format!("{}:{}", LOCAL_ADDR, PORT))?;
+    println!("Waiting Connection...");
 
     for stream in listener.incoming() {
         match stream {
@@ -37,4 +38,5 @@ fn handle_client(stream: &mut TcpStream) {
             Err(_) => {break;}
         }
     }
+    println!("Good Bye Client: {}", stream.peer_addr().unwrap());
 }
